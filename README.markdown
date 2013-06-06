@@ -1,3 +1,35 @@
+Gritter is an awesome plugin written by Jordan Boesch. I decided I wanted to use it in an AngularJS project at work, which is what spawned this version of his library.
+
+To install this with bower use:
+``` bower install gritter ```
+
+Here's a sample AngularJS directive for Gritter (I had to modify the original library to get code like this working). This assumes your application module is named ngApp.
+```javascript
+'use strict';
+
+angular.module('ngApp')
+  .directive('gritterAdd', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element) {
+        // Bind gritter 
+        element.bind('click', function () {
+          element.gritter.add({
+            title: 'This is a regular notice!',
+            text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" style="color:#ccc">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+            image: 'http://a0.twimg.com/profile_images/59268975/jquery_avatar_bigger.png',
+            sticky: false,
+            time: ''
+          });
+        });
+      }
+    };
+  });
+```
+
+Similar directives could be written for the other functions such as gritter.remove, gritter.removeAll or for properties like gritter.options.
+
+
 # Gritter for jQuery 
 
 A small growl-like notification plugin for jQuery
