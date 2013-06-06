@@ -1,3 +1,5 @@
+
+# Gritter for AngularJS
 Gritter is an awesome plugin written by Jordan Boesch. I decided I wanted to use it in an AngularJS project at work, which is what spawned this version of his library.
 
 To install this with bower use:
