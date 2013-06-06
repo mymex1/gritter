@@ -1,0 +1,9 @@
+{
+  "name": "Gritter",
+  "version": "1.7.5",
+  "commit": "3325477ea7c6d2017a2b103456a1b04b6e17df61",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jferiante/Gritter.git"
+  }
+}
