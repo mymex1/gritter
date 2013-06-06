@@ -1,0 +1,8 @@
+{
+    "author": {
+        "name": "Jordan Boesch"
+    },
+    "name": "gritter",
+    "version": "1.7.5",
+    "main": ["./js/jsquery.gritter.min.js"]
+}
