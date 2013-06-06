@@ -3,7 +3,7 @@ Gritter is an awesome plugin written by Jordan Boesch. I decided I wanted to use
 To install this with bower use:
 ``` bower install gritter ```
 
-Here's a sample AngularJS directive for Gritter (I had to modify the original library to get code like this working). This assumes your application module is named ngApp.
+Here's a sample AngularJS directive for Gritter (I had to modify the original library to get code like this working, so you'll need my version of the library for this to work). This assumes your application module is named ngApp.
 ```javascript
 'use strict';
 
