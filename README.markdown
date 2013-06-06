@@ -5,7 +5,7 @@ A small growl-like notification plugin for jQuery
 
 ## Change Log
 
-### Changes in 1.7.5 (February 24, 2012)
+### Changes in 1.7.5 (June 6, 2013)
 
 * Fixing bug where AngularJS was unable to find the gritter functions and properties. - Jason Feriante
 
