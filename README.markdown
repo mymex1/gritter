@@ -5,6 +5,10 @@ A small growl-like notification plugin for jQuery
 
 ## Change Log
 
+### Changes in 1.7.5 (February 24, 2012)
+
+* Fixing bug where AngularJS was unable to find the gritter functions and properties. - Jason Feriante
+
 ### Changes in 1.7.4 (February 24, 2012)
 
 * Fixing bug where click event was being bound multiple times on hover. The result was the beforeClose callback being called multiple times. Thanks for commit aossowski!
