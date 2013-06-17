@@ -38,6 +38,10 @@ A small growl-like notification plugin for jQuery
 
 ## Change Log
 
+### Changes in 1.7.6 (June 17, 2013)
+
+* Added options to always show the close button (hover_state = 'no'), and to customize the close button html (close_button = 'some html'. - Jason Feriante
+
 ### Changes in 1.7.5 (June 6, 2013)
 
 * Fixing bug where AngularJS was unable to find the gritter functions and properties. - Jason Feriante

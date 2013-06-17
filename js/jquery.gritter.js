@@ -109,8 +109,10 @@
         text = params.text,
         image = params.image || '',
         sticky = params.sticky || false,
+        hover_state = params.hover_state || true, // hide close-button on mouse-over
         item_class = params.class_name || $.gritter.options.class_name,
         position = $.gritter.options.position,
+        close_icon = params.close_icon || this._tpl_close, // customize the close button (e.g. with an icon)
         time_alive = params.time || '';
 
       this._verifyWrapper();
@@ -143,7 +145,7 @@
       }
 
       tmp = this._str_replace(
-        ['[[title]]', '[[text]]', '[[close]]', '[[image]]', '[[number]]', '[[class_name]]', '[[item_class]]'], [title, text, this._tpl_close, image_str, this._item_count, class_name, item_class], tmp);
+        ['[[title]]', '[[text]]', '[[close]]', '[[image]]', '[[number]]', '[[class_name]]', '[[item_class]]'], [title, text, close_icon, image_str, this._item_count, class_name, item_class], tmp);
 
       // If it's false, don't show another gritter message
       if (this['_before_open_' + number]() === false) {
@@ -164,6 +166,7 @@
 
       // Bind the hover/unhover states
       $(item).bind('mouseenter mouseleave', function (event) {
+
         if (event.type === 'mouseenter') {
           if (!sticky) {
             Gritter._restoreItemIfFading($(this), number);
@@ -173,7 +176,12 @@
             Gritter._setFadeTimer($(this), number);
           }
         }
-        Gritter._hoverState($(this), event.type);
+
+        // Only use hover_state if the option was specified
+        if(hover_state !== 'no')
+        {
+          Gritter._hoverState($(this), event.type);
+        }
       });
 
       // Clicking (X) makes the perdy thing close
