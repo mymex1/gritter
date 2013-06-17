@@ -1,8 +1,8 @@
 {
     "author": {
-        "name": "Jordan Boesch"
+        "name": "Jordan Boesch, Jason Feriante"
     },
     "name": "gritter",
-    "version": "1.7.5",
+    "version": "1.7.6",
     "main": ["./js/jsquery.gritter.min.js"]
 }
