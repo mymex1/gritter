@@ -1,19 +1,19 @@
 # Gritter for AngularJS
-Gritter is an awesome plugin written by Jordan Boesch. I decided I wanted to use it in an AngularJS project at work, which is what spawned this version of his library.
+Gritter is an awesome plugin written by Jordan Boesch. I decided I wanted to use it in an AngularJS project at work, which is what spawned this version of his library. Currently, this is working with AngularJS 1.1.5.
 
 To install this with bower use:
 ``` bower install gritter ```
 
 Here's a sample AngularJS directive for Gritter (I had to modify the original library to get code like this working, so you'll need my version of the library for this to work).
-```javascript
-'use strict';
 
+Adding a regular notice:
+```javascript
 angular.module('ngApp')
   .directive('gritterAdd', function () {
     return {
       restrict: 'A',
       link: function (scope, element) {
-        // Bind gritter 
+        // Bind gritter to a click event
         element.bind('click', function () {
           element.gritter.add({
             title: 'This is a regular notice!',
@@ -26,6 +26,39 @@ angular.module('ngApp')
       }
     };
   });
+```
+
+The HTML you would use on the page to trigger the gritterAdd directive:
+```html
+<a href="#" gritter-add>Gritter Regular Notification</a>
+```
+
+Adding a sticky notice:
+```javascript
+angular.module('ngApp')
+  .directive('gritterAddSticky', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element) {
+        // Bind gritter to a click event
+        element.bind('click', function () {
+          element.gritter.add({
+            title: 'This is a sticky notice!',
+            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" style="color:#ccc">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+            image: 'http://s3.amazonaws.com/twitter_production/profile_images/132499022/myface_bigger.jpg',
+            sticky: true,
+            time: '',
+            class_name: 'my-sticky-class'
+          });
+        });
+      }
+    };
+  });
+```
+
+The HTML you would use on the page to trigger the gritterAddSticky directive:
+```html
+<a href="#" gritter-add-sticky>Gritter Sticky Notification</a>
 ```
 
 Similar directives could be written for the other functions such as gritter.remove, gritter.removeAll or for properties like gritter.options.
