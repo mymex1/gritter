@@ -7,13 +7,13 @@
  *
  * Date: February 24, 2012
  * Version: 1.7.4
- * 
+ *
  * @modified by Jason Feriante
  * I had to make changes to the library in order to get it working with AngularJS
  * Date: June 6, 2013
  * Version: 1.7.5 / forked.
  */
-(function ($) {
+(function($) {
 
   /**
    * Set it up as an object under the jQuery namespace
@@ -35,13 +35,13 @@
    * Add a gritter notification to the screen
    * @see Gritter#add();
    */
-  $.fn.gritter.add = $.gritter.add = function (params) {
+  $.fn.gritter.add = $.gritter.add = function(params) {
     try {
       return Gritter.add(params || {});
     } catch (e) {
 
       var err = 'Gritter Error: ' + e;
-      (typeof (console) !== 'undefined' && console.error) ? console.error(err, params) : alert(err);
+      (typeof(console) !== 'undefined' && console.error) ? console.error(err, params) : alert(err);
     }
   };
 
@@ -49,7 +49,7 @@
    * Remove a gritter notification from the screen
    * @see Gritter#removeSpecific();
    */
-  $.fn.gritter.remove = $.gritter.remove = function (id, params) {
+  $.fn.gritter.remove = $.gritter.remove = function(id, params) {
     Gritter.removeSpecific(id, params || {});
   };
 
@@ -57,7 +57,7 @@
    * Remove all notifications
    * @see Gritter#stop();
    */
-  $.fn.gritter.removeAll = $.gritter.removeAll = function (params) {
+  $.fn.gritter.removeAll = $.gritter.removeAll = function(params) {
     Gritter.stop(params || {});
   };
 
@@ -88,9 +88,9 @@
      * @param {Object} params The object that contains all the options for drawing the notification
      * @return {Integer} The specific numeric id to that gritter notification
      */
-    add: function (params) {
+    add: function(params) {
       // Handle straight text
-      if (typeof (params) === 'string') {
+      if (typeof(params) === 'string') {
         params = {
           text: params
         };
@@ -124,8 +124,8 @@
         tmp = this._tpl_item;
 
       // Assign callbacks
-      $(['before_open', 'after_open', 'before_close', 'after_close']).each(function (i, val) {
-        Gritter['_' + val + '_' + number] = ($.isFunction(params[val])) ? params[val] : function () {};
+      $(['before_open', 'after_open', 'before_close', 'after_close']).each(function(i, val) {
+        Gritter['_' + val + '_' + number] = ($.isFunction(params[val])) ? params[val] : function() {};
       });
 
       // Reset
@@ -162,36 +162,36 @@
 
       var item = $('#gritter-item-' + this._item_count);
 
-      item.fadeIn(this.fade_in_speed, function () {
+      item.fadeIn(this.fade_in_speed, function() {
         Gritter['_after_open_' + number]($(this));
+
+        // Bind the hover/unhover states, do this after fadeIn , since otherwise the hover methods might interfere with "afterOpen" callback
+        $(item).bind('mouseenter mouseleave', function(event) {
+
+          if (event.type === 'mouseenter') {
+            if (!sticky) {
+              Gritter._restoreItemIfFading($(this), number);
+            }
+          } else {
+            if (!sticky) {
+              Gritter._setFadeTimer($(this), number);
+            }
+          }
+
+          // Only use hover_state if the option was specified
+          if (hover_state !== 'no') {
+            Gritter._hoverState($(this), event.type);
+          }
+        });
+        
       });
 
       if (!sticky) {
         this._setFadeTimer(item, number);
       }
 
-      // Bind the hover/unhover states
-      $(item).bind('mouseenter mouseleave', function (event) {
-
-        if (event.type === 'mouseenter') {
-          if (!sticky) {
-            Gritter._restoreItemIfFading($(this), number);
-          }
-        } else {
-          if (!sticky) {
-            Gritter._setFadeTimer($(this), number);
-          }
-        }
-
-        // Only use hover_state if the option was specified
-        if(hover_state !== 'no')
-        {
-          Gritter._hoverState($(this), event.type);
-        }
-      });
-
       // Clicking (X) makes the perdy thing close
-      $(item).find('.gritter-close').click(function () {
+      $(item).find('.gritter-close').click(function() {
         Gritter.removeSpecific(number, {}, null, true);
       });
 
@@ -205,7 +205,7 @@
      * @param {Object} e The jQuery element that we're going to perform the remove() action on
      * @param {Boolean} manual_close Did we close the gritter dialog with the (X) button
      */
-    _countRemoveWrapper: function (unique_id, e, manual_close) {
+    _countRemoveWrapper: function(unique_id, e, manual_close) {
 
       // Remove it then run the callback function
       e.remove();
@@ -226,10 +226,10 @@
      * @param {Object} params An optional list of params to set fade speeds etc.
      * @param {Boolean} unbind_events Unbind the mouseenter/mouseleave events if they click (X)
      */
-    _fade: function (e, unique_id, params, unbind_events) {
+    _fade: function(e, unique_id, params, unbind_events) {
 
       var params = params || {},
-        fade = (typeof (params.fade) !== 'undefined') ? params.fade : true,
+        fade = (typeof(params.fade) !== 'undefined') ? params.fade : true,
         fade_out_speed = params.speed || this.fade_out_speed,
         manual_close = unbind_events;
 
@@ -244,14 +244,14 @@
       if (fade) {
 
         e.animate({
-            opacity: 0
-          }, fade_out_speed, function () {
-            e.animate({
-                height: 0
-              }, 300, function () {
-                Gritter._countRemoveWrapper(unique_id, e, manual_close);
-              })
+          opacity: 0
+        }, fade_out_speed, function() {
+          e.animate({
+            height: 0
+          }, 300, function() {
+            Gritter._countRemoveWrapper(unique_id, e, manual_close);
           })
+        })
 
       } else {
 
@@ -262,12 +262,12 @@
     },
 
     /**
-     * Perform actions based on the type of bind (mouseenter, mouseleave) 
+     * Perform actions based on the type of bind (mouseenter, mouseleave)
      * @private
      * @param {Object} e The jQuery element
      * @param {String} type The type of action we're performing: mouseenter or mouseleave
      */
-    _hoverState: function (e, type) {
+    _hoverState: function(e, type) {
 
       // Change the border styles and add the (X) close button when you hover
       if (type == 'mouseenter') {
@@ -297,7 +297,7 @@
      * @param {Object} e The jQuery element that we're "fading" then removing
      * @param {Boolean} unbind_events If we clicked on the (X) we set this to true to unbind mouseenter/mouseleave
      */
-    removeSpecific: function (unique_id, params, e, unbind_events) {
+    removeSpecific: function(unique_id, params, e, unbind_events) {
 
       if (!e) {
         var e = $('#gritter-item-' + unique_id);
@@ -315,13 +315,13 @@
      * @param {Object} e The HTML element to remove
      * @param {Integer} unique_id The ID of the element
      */
-    _restoreItemIfFading: function (e, unique_id) {
+    _restoreItemIfFading: function(e, unique_id) {
 
       clearTimeout(this['_int_id_' + unique_id]);
       e.stop().css({
-          opacity: '',
-          height: ''
-        });
+        opacity: '',
+        height: ''
+      });
 
     },
 
@@ -329,7 +329,7 @@
      * Setup the global options - only once
      * @private
      */
-    _runSetup: function () {
+    _runSetup: function() {
 
       for (opt in $.gritter.options) {
         this[opt] = $.gritter.options[opt];
@@ -344,10 +344,10 @@
      * @param {Object} item The HTML element we're dealing with
      * @param {Integer} unique_id The ID of the element
      */
-    _setFadeTimer: function (e, unique_id) {
+    _setFadeTimer: function(e, unique_id) {
 
       var timer_str = (this._custom_timer) ? this._custom_timer : this.time;
-      this['_int_id_' + unique_id] = setTimeout(function () {
+      this['_int_id_' + unique_id] = setTimeout(function() {
         Gritter._fade(e, unique_id);
       }, timer_str);
 
@@ -357,15 +357,15 @@
      * Bring everything to a halt
      * @param {Object} params A list of callback functions to pass when all notifications are removed
      */
-    stop: function (params) {
+    stop: function(params) {
 
       // callbacks (if passed)
-      var before_close = ($.isFunction(params.before_close)) ? params.before_close : function () {};
-      var after_close = ($.isFunction(params.after_close)) ? params.after_close : function () {};
+      var before_close = ($.isFunction(params.before_close)) ? params.before_close : function() {};
+      var after_close = ($.isFunction(params.after_close)) ? params.after_close : function() {};
 
       var wrap = $('#gritter-notice-wrapper');
       before_close(wrap);
-      wrap.fadeOut(function () {
+      wrap.fadeOut(function() {
         $(this).remove();
         after_close();
       });
@@ -379,7 +379,7 @@
      * @param {String/Array} replace A list of things to replace the searches with
      * @return {String} sa The output
      */
-    _str_replace: function (search, replace, subject, count) {
+    _str_replace: function(search, replace, subject, count) {
 
       var i = 0,
         j = 0,
@@ -425,7 +425,7 @@
      * A check to make sure we have something to wrap our notices with
      * @private
      */
-    _verifyWrapper: function () {
+    _verifyWrapper: function() {
 
       if ($('#gritter-notice-wrapper').length == 0) {
         $('body').append(this._tpl_wrap);
